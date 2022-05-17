@@ -1,3 +1,35 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+category_index:
+  path: /
+  controller: App\Controller\CategoryController::index
+
+category_view:
+  path: /category/{categoryId}
+  controller: App\Controller\CategoryController::view
+
+category_create:
+  path: /category/create
+  controller: App\Controller\CategoryController::create
+
+category_update:
+  path: /category/update/{categoryId}
+  controller: App\Controller\CategoryController::update
+
+category_delete:
+  path: /category/delete/{categoryId}
+  controller: App\Controller\CategoryController::delete
+
+product_view:
+  path: /product/{productId}
+  controller: App\Controller\ProductController::view
+
+product_create:
+  path: /product/create
+  controller: App\Controller\ProductController::create
+
+product_update:
+  path: /product/update/{productId}
+  controller: App\Controller\ProductController::update
+
+product_delete:
+  path: /product/delete/{productId}
+  controller: App\Controller\ProductController::delete

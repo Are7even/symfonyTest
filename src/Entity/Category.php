@@ -77,7 +77,7 @@ class Category
     {
         if (!$this->categoryToProducts->contains($categoryToProduct)) {
             $this->categoryToProducts[] = $categoryToProduct;
-            $categoryToProduct->setCategoryId($this);
+            $categoryToProduct->setCategory($this);
         }
 
         return $this;
@@ -87,8 +87,8 @@ class Category
     {
         if ($this->categoryToProducts->removeElement($categoryToProduct)) {
             // set the owning side to null (unless already changed)
-            if ($categoryToProduct->getCategoryId() === $this) {
-                $categoryToProduct->setCategoryId(null);
+            if ($categoryToProduct->getCategory() === $this) {
+                $categoryToProduct->setCategory(null);
             }
         }
 

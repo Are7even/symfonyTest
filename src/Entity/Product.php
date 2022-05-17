@@ -104,7 +104,7 @@ class Product
     {
         if (!$this->categoryToProducts->contains($categoryToProduct)) {
             $this->categoryToProducts[] = $categoryToProduct;
-            $categoryToProduct->setProductId($this);
+            $categoryToProduct->setProduct($this);
         }
 
         return $this;
@@ -114,8 +114,8 @@ class Product
     {
         if ($this->categoryToProducts->removeElement($categoryToProduct)) {
             // set the owning side to null (unless already changed)
-            if ($categoryToProduct->getProductId() === $this) {
-                $categoryToProduct->setProductId(null);
+            if ($categoryToProduct->getProduct() === $this) {
+                $categoryToProduct->setProduct(null);
             }
         }
 
@@ -134,7 +134,7 @@ class Product
     {
         if (!$this->productToOrders->contains($productToOrder)) {
             $this->productToOrders[] = $productToOrder;
-            $productToOrder->setProductId($this);
+            $productToOrder->setProduct($this);
         }
 
         return $this;
@@ -144,8 +144,8 @@ class Product
     {
         if ($this->productToOrders->removeElement($productToOrder)) {
             // set the owning side to null (unless already changed)
-            if ($productToOrder->getProductId() === $this) {
-                $productToOrder->setProductId(null);
+            if ($productToOrder->getProduct() === $this) {
+                $productToOrder->setProduct(null);
             }
         }
 

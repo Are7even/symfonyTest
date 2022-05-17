@@ -5,6 +5,11 @@
         "@symfony/webpack-encore": "^2.0.0",
         "core-js": "^3.0.0",
         "regenerator-runtime": "^0.13.2",
+        "sass": "^1.51.0",
+        "jquery": "3.5.1",
+        "sass-loader": "^12.0.0",
+        "ts-loader": "^9.0.0",
+        "typescript": "^4.6.4",
         "webpack-notifier": "^1.6.0"
     },
     "license": "UNLICENSED",

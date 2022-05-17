@@ -26,24 +26,24 @@ class CategoryToProduct
         return $this->id;
     }
 
-    public function getCategoryId(): ?Category
+    public function getCategory(): ?Category
     {
         return $this->category_id;
     }
 
-    public function setCategoryId(?Category $category_id): self
+    public function setCategory(?Category $category_id): self
     {
         $this->category_id = $category_id;
 
         return $this;
     }
 
-    public function getProductId(): ?Product
+    public function getProduct(): ?Product
     {
         return $this->product_id;
     }
 
-    public function setProductId(?Product $product_id): self
+    public function setProduct(?Product $product_id): self
     {
         $this->product_id = $product_id;
 

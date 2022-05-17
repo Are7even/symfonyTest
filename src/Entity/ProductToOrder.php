@@ -56,12 +56,12 @@ class ProductToOrder
         return $this;
     }
 
-    public function getProductId(): ?Product
+    public function getProduct(): ?Product
     {
         return $this->product_id;
     }
 
-    public function setProductId(?Product $product_id): self
+    public function setProduct(?Product $product_id): self
     {
         $this->product_id = $product_id;
 
