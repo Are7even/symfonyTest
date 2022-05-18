@@ -21,19 +21,19 @@ class Category
     #[ORM\Column(type: 'integer')]
     private $status;
 
-    #[ORM\OneToMany(mappedBy: 'category_id', targetEntity: CategoryToProduct::class, orphanRemoval: true)]
-    private $categoryToProducts;
-
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'parent_id')]
     private $parent;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     private $parent_id;
 
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
+    private $products;
+
     public function __construct()
     {
-        $this->categoryToProducts = new ArrayCollection();
         $this->parent_id = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function __toString()
@@ -66,36 +66,6 @@ class Category
     public function setStatus(int $status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, CategoryToProduct>
-     */
-    public function getCategoryToProducts(): Collection
-    {
-        return $this->categoryToProducts;
-    }
-
-    public function addCategoryToProduct(CategoryToProduct $categoryToProduct): self
-    {
-        if (!$this->categoryToProducts->contains($categoryToProduct)) {
-            $this->categoryToProducts[] = $categoryToProduct;
-            $categoryToProduct->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategoryToProduct(CategoryToProduct $categoryToProduct): self
-    {
-        if ($this->categoryToProducts->removeElement($categoryToProduct)) {
-            // set the owning side to null (unless already changed)
-            if ($categoryToProduct->getCategory() === $this) {
-                $categoryToProduct->setCategory(null);
-            }
-        }
 
         return $this;
     }
@@ -136,6 +106,36 @@ class Category
             // set the owning side to null (unless already changed)
             if ($parentId->getParent() === $this) {
                 $parentId->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getCategory() === $this) {
+                $product->setCategory(null);
             }
         }
 

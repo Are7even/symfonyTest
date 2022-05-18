@@ -27,15 +27,15 @@ class Product
     #[ORM\Column(type: 'integer')]
     private $status;
 
-    #[ORM\OneToMany(mappedBy: 'product_id', targetEntity: CategoryToProduct::class, orphanRemoval: true)]
-    private $categoryToProducts;
-
     #[ORM\OneToMany(mappedBy: 'product_id', targetEntity: ProductToOrder::class, orphanRemoval: true)]
     private $productToOrders;
 
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $category;
+
     public function __construct()
     {
-        $this->categoryToProducts = new ArrayCollection();
         $this->productToOrders = new ArrayCollection();
     }
 
@@ -93,36 +93,6 @@ class Product
     }
 
     /**
-     * @return Collection<int, CategoryToProduct>
-     */
-    public function getCategoryToProducts(): Collection
-    {
-        return $this->categoryToProducts;
-    }
-
-    public function addCategoryToProduct(CategoryToProduct $categoryToProduct): self
-    {
-        if (!$this->categoryToProducts->contains($categoryToProduct)) {
-            $this->categoryToProducts[] = $categoryToProduct;
-            $categoryToProduct->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategoryToProduct(CategoryToProduct $categoryToProduct): self
-    {
-        if ($this->categoryToProducts->removeElement($categoryToProduct)) {
-            // set the owning side to null (unless already changed)
-            if ($categoryToProduct->getProduct() === $this) {
-                $categoryToProduct->setProduct(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, ProductToOrder>
      */
     public function getProductToOrders(): Collection
@@ -148,6 +118,18 @@ class Product
                 $productToOrder->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
