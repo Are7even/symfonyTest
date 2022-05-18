@@ -62,7 +62,7 @@
                         <li>
                             <a href="#offcanvas-add-cart" class="offcanvas-toggle">
                                 <i class="icon-shopping-cart"></i>
-                                <span class="header-action-icon-item-count">3</span>
+                                <span class="header-action-icon-item-count"></span>
                             </a>
                         </li>
                     </ul> <!-- End Header Action Icon -->
@@ -81,12 +81,12 @@
                         <nav>
                             <ul>
                                 <li class="has-dropdown">
-                                    <a class="active main-menu-link" href="index.html">Home <i
+                                    <a class="active main-menu-link" href="{{ path('app_product_index') }}">Home <i
                                                 class="fa fa-angle-down"></i></a>
                                     <!-- Sub Menu -->
                                     <ul class="sub-menu">
-                                        <li><a href="index.html">Home 1</a></li>
-                                        <li><a href="index-2.html">Home 2</a></li>
+                                        <li><a href="{{ path('app_product_index') }}">Products</a></li>
+                                        <li><a href="{{ path('app_category_index') }}">Categories</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -470,7 +470,9 @@
 <div class="offcanvas-overlay"></div>
 <!-- ...:::: Start Blog Section:::... -->
 <div class="blog-section">
+    <div class="container">
     {% block body %}{% endblock %}
+    </div>
 </div> <!-- ...:::: End Blog Section:::... -->
 <!-- ...:::: Start Footer Section:::... -->
 <footer class="footer-section section-top-gap-100">

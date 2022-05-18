@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product{% endblock %}
+
+{% block body %}
+    <!-- ...:::: Start Breadcrumb Section:::... -->
+    <div class="breadcrumb-section">
+        <div class="breadcrumb-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
+                        <h3 class="breadcrumb-title">Product {{ product.name }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- ...:::: End Breadcrumb Section:::... -->
+    <div class="product-details-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="product-details-gallery-area">
+                        <div class="product-large-image product-large-image-horaizontal slick-initialized slick-slider">
+                            <div class="slick-list draggable">
+                                <div class="slick-track" style="opacity: 1; width: 3408px;">
+                                    <div class="product-image-large-single zoom-image-hover slick-slide slick-current slick-active"
+                                         data-slick-index="0" aria-hidden="false" tabindex="0"
+                                         style="width: 568px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1; overflow: hidden;">
+                                        <img src="assets/images/products_images/aments_products_large_image_1.jpg"
+                                             alt="">
+                                        <img role="presentation" alt=""
+                                             src="file:///F:/templates/amentsv1.0/amentshtml-10/aments/assets/images/products_images/aments_products_large_image_1.jpg"
+                                             class="zoomImg"
+                                             style="position: absolute; top: -138.529px; left: -231.592px; opacity: 0; width: 800px; height: 800px; border: none; max-width: none; max-height: none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="product-details-content-area">
+                        <!-- Start  Product Details Text Area-->
+                        <div class="product-details-text">
+                            <h4 class="title">{{ product.name }}</h4>
+                            <h6 class="product-ref mb-20">Unique CODE: <span>{{ product.uniqueCode }}</span></h6>
+                            <h6 class="product-ref mb-20">Status: <span>{{ product.status }}</span></h6>
+                            <h6 class="product-ref mb-20">Category: <span>{{ product.status }}</span></h6>
+                            <div class="price">
+                                ${{ product.price }}
+                            </div>
+                            <p>eget velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus eget
+                                sagittis vulputate, sapien libero hendrerit est, sed commodo augue nisi non neque. Lorem
+                                ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor, lorem et placerat
+                                vestibulum, metus nisi posuere nisl, in</p>
+                            <a href="{{ path('app_product_index') }}">back to list</a>
+                            <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
+                        </div> <!-- End  Product Details Text Area-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
