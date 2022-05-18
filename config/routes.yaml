@@ -2,13 +2,13 @@ category_index:
   path: /
   controller: App\Controller\CategoryController::index
 
-category_view:
-  path: /category/{categoryId}
-  controller: App\Controller\CategoryController::view
-
 category_create:
   path: /category/create
   controller: App\Controller\CategoryController::create
+
+category_view:
+  path: /category/{categoryId}
+  controller: App\Controller\CategoryController::view
 
 category_update:
   path: /category/update/{categoryId}
@@ -18,13 +18,13 @@ category_delete:
   path: /category/delete/{categoryId}
   controller: App\Controller\CategoryController::delete
 
-product_view:
-  path: /product/{productId}
-  controller: App\Controller\ProductController::view
-
 product_create:
   path: /product/create
   controller: App\Controller\ProductController::create
+
+product_view:
+  path: /product/{productId}
+  controller: App\Controller\ProductController::view
 
 product_update:
   path: /product/update/{productId}

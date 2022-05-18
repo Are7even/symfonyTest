@@ -28,9 +28,8 @@ class CategoryController extends AbstractController
     #[Route('/category/create', name: 'category_create')]
     public function create()
     {
-        return $this->render('category/create.html.twig', [
-
-        ]);
+        
+        return $this->render('category/create.html.twig');
     }
 
     #[Route('/category/update/{categoryId}', name: 'category_update')]
