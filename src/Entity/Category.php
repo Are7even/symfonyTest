@@ -58,9 +58,12 @@ class Category
         return $this;
     }
 
-    public function getStatus(): ?int
+    public function getStatus(): ?string
     {
-        return $this->status;
+        if ($this->status)
+            return 'Active';
+
+        return 'Draft';
     }
 
     public function setStatus(int $status): self
