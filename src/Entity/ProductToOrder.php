@@ -21,11 +21,11 @@ class ProductToOrder
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'productToOrders')]
     #[ORM\JoinColumn(nullable: false)]
-    private $product_id;
+    private $product;
 
     #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'productToOrders')]
     #[ORM\JoinColumn(nullable: false)]
-    private $order_id;
+    private $order;
 
     public function getId(): ?int
     {
@@ -58,24 +58,24 @@ class ProductToOrder
 
     public function getProduct(): ?Product
     {
-        return $this->product_id;
+        return $this->product;
     }
 
-    public function setProduct(?Product $product_id): self
+    public function setProduct(?Product $product): self
     {
-        $this->product_id = $product_id;
+        $this->product = $product;
 
         return $this;
     }
 
-    public function getOrderId(): ?Order
+    public function getOrder(): ?Order
     {
-        return $this->order_id;
+        return $this->order;
     }
 
-    public function setOrderId(?Order $order_id): self
+    public function setOrder(?Order $order): self
     {
-        $this->order_id = $order_id;
+        $this->order = $order;
 
         return $this;
     }

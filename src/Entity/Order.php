@@ -29,14 +29,6 @@ class Order
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
-    #[ORM\OneToMany(mappedBy: 'order_id', targetEntity: ProductToOrder::class, orphanRemoval: true)]
-    private $productToOrders;
-
-    public function __construct()
-    {
-        $this->productToOrders = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -86,36 +78,6 @@ class Order
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ProductToOrder>
-     */
-    public function getProductToOrders(): Collection
-    {
-        return $this->productToOrders;
-    }
-
-    public function addProductToOrder(ProductToOrder $productToOrder): self
-    {
-        if (!$this->productToOrders->contains($productToOrder)) {
-            $this->productToOrders[] = $productToOrder;
-            $productToOrder->setOrderId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProductToOrder(ProductToOrder $productToOrder): self
-    {
-        if ($this->productToOrders->removeElement($productToOrder)) {
-            // set the owning side to null (unless already changed)
-            if ($productToOrder->getOrderId() === $this) {
-                $productToOrder->setOrderId(null);
-            }
-        }
 
         return $this;
     }

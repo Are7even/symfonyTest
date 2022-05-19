@@ -27,12 +27,12 @@ class Product
     #[ORM\Column(type: 'integer')]
     private $status;
 
-    #[ORM\OneToMany(mappedBy: 'product_id', targetEntity: ProductToOrder::class, orphanRemoval: true)]
-    private $productToOrders;
-
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private $category;
+
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductToOrder::class)]
+    private $productToOrders;
 
     public function __construct()
     {
@@ -92,6 +92,18 @@ class Product
         return $this;
     }
 
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, ProductToOrder>
      */
@@ -118,18 +130,6 @@ class Product
                 $productToOrder->setProduct(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
 
         return $this;
     }

@@ -3,8 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Category;
-use PhpParser\Builder\EnumCase;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,9 +14,13 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('status')
-            ->add('parent')
-        ;
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    'Active' => 1,
+                    'Draft' => 0,
+                ]
+            ])
+            ->add('parent');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

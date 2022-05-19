@@ -3,10 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Product;
-use App\Enums\BaseStatusEnum;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\ChoiceList\ChoiceList;
-use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,9 +16,13 @@ class ProductType extends AbstractType
             ->add('unique_code')
             ->add('name')
             ->add('price')
-            ->add('status')
-            ->add('category')
-        ;
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    'Active' => 1,
+                    'Draft' => 0,
+                ]
+            ])
+            ->add('category');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
