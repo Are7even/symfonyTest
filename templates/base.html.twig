@@ -62,7 +62,11 @@
                         <li>
                             <a href="#offcanvas-add-cart" class="offcanvas-toggle">
                                 <i class="icon-shopping-cart"></i>
-                                <span class="header-action-icon-item-count"></span>
+                                <span class="header-action-icon-item-count">
+                                    {% if(app.session.has('productId')) %}
+                                        ◉
+                                    {% endif %}
+                                </span>
                             </a>
                         </li>
                     </ul> <!-- End Header Action Icon -->

@@ -1,7 +1,7 @@
-#home_page:
-#  path: /
-#  controller: App\Controller\CategoryController::index
-#
+home_page:
+  path: /{productId}/addToCart
+  controller: App\Controller\ProductController::addToCart
+
 #category_create:
 #  path: /category/create
 #  controller: App\Controller\CategoryController::create

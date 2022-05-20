@@ -55,6 +55,10 @@
                                 vestibulum, metus nisi posuere nisl, in</p>
                             <a href="{{ path('app_product_index') }}">back to list</a>
                             <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
+                            <div class="button">
+                                <a class="btn btn-success" href="{{ path('add_product_to_cart', {'productId': product.id}) }}">Add
+                                    to Cart</a>
+                            </div>
                         </div> <!-- End  Product Details Text Area-->
                     </div>
                 </div>
