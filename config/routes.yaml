@@ -1,11 +1,11 @@
-home_page:
+product_add_to_cart:
   path: /{productId}/addToCart
   controller: App\Controller\ProductController::addToCart
 
-#category_create:
-#  path: /category/create
-#  controller: App\Controller\CategoryController::create
-#
+home:
+  path: /
+  controller: App\Controller\CategoryController::index
+
 #category_view:
 #  path: /category/{categoryId}
 #  controller: App\Controller\CategoryController::view
