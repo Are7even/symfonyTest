@@ -82,7 +82,7 @@ class ProductController extends AbstractController
         $session->set('productId', $productId);
         $session->set('quantityByProductId' . $productId, 1);
 
-        return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_product_show', ['id' => $productId], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
