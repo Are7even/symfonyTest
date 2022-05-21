@@ -51,9 +51,9 @@ class Order
         return $this->date;
     }
 
-    public function setDate(int $date): self
+    public function setDate(): self
     {
-        $this->date = $date;
+        $this->date = time();
 
         return $this;
     }

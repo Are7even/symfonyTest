@@ -60,7 +60,7 @@
                     <!-- Start Header Action Icon -->
                     <ul class="header-action-icon">
                         <li>
-                            <a href="#offcanvas-add-cart" class="offcanvas-toggle">
+                            <a href="{{ path('app_order_new') }}" class="offcanvas-toggle">
                                 <i class="icon-shopping-cart"></i>
                                 <span class="header-action-icon-item-count">
                                     {% if(app.session.has('productId')) %}

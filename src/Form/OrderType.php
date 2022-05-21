@@ -15,7 +15,7 @@ class OrderType extends AbstractType
             ->add('status')
             ->add('date')
             ->add('total_price')
-            ->add('user')
+//            ->add('user')
         ;
     }
 
