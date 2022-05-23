@@ -60,10 +60,10 @@
                     <!-- Start Header Action Icon -->
                     <ul class="header-action-icon">
                         <li>
-                            <a href="{{ path('app_order_new') }}" class="offcanvas-toggle">
+                            <a href="{{ path('app_order_index') }}" class="offcanvas-toggle">
                                 <i class="icon-shopping-cart"></i>
                                 <span class="header-action-icon-item-count">
-                                    {% if(app.session.has('productId')) %}
+                                    {% if(app.session.has('products')) %}
                                         ◉
                                     {% endif %}
                                 </span>

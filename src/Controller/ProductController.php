@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/product')]
 class ProductController extends AbstractController
 {
-    private $requestStack;
+    private RequestStack $requestStack;
 
     public function __construct(RequestStack $requestStack)
     {
@@ -76,11 +76,41 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{productId}/addToCart', name: 'add_product_to_cart', methods: ['GET'])]
-    public function addToCart(int $productId): RedirectResponse
+    public function addToCart(int $productId, ProductRepository $productRepository): RedirectResponse
     {
         $session = $this->requestStack->getSession();
-        $session->set('productId', $productId);
-        $session->set('quantityByProductId' . $productId, 1);
+        $product = $productRepository->findOneBy(['id' => $productId]);
+        $products = $session->get('products', []);
+
+        if (!empty($products['productById' . $productId])) {
+            $products['productById' . $productId]['quantity'] += 1;
+        } else {
+            $products['productById' . $productId] = [
+                'product' => $product,
+                'quantity' => 1,
+            ];
+        }
+        $session->set('products', $products);
+
+        return $this->redirectToRoute('app_product_show', ['id' => $productId], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{productId}/removeToCart', name: 'remove_product_to_cart', methods: ['GET'])]
+    public function removeToCart(int $productId): RedirectResponse
+    {
+        $session = $this->requestStack->getSession();
+        $products = $session->get('products', []);
+
+        if (!empty($products['productById' . $productId])) {
+            if ($products['productById' . $productId]['quantity'] === 1) {
+                unset($products['productById' . $productId]);
+                $session->set('products', $products);
+                return $this->redirectToRoute('app_product_show', ['id' => $productId], Response::HTTP_SEE_OTHER);
+            }
+
+            $products['productById' . $productId]['quantity'] -= 1;
+            $session->set('products', $products);
+        }
 
         return $this->redirectToRoute('app_product_show', ['id' => $productId], Response::HTTP_SEE_OTHER);
     }
