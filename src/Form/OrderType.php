@@ -23,11 +23,11 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('user')
-            ->add('total_price', textType::class, [
-                'label' => 'Sum',
-                'data' => (new OrderService($this->requestStack))->calculateSum()
-            ]);
+            ->add('user');
+//            ->add('total_price', textType::class, [
+//                'label' => 'Sum',
+//                'data' => (new OrderService($this->requestStack))->calculateSum()
+//            ]);
     }
 
 }

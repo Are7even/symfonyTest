@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
@@ -26,6 +27,9 @@ class Order
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
+
+    #[ORM\OneToMany(mappedBy: 'order', targetEntity: ProductToOrder::class)]
+     private $productToOrders;
 
     public function __construct()
     {
@@ -82,6 +86,36 @@ class Order
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductToOrder>
+     */
+    public function getProductToOrders(): Collection
+    {
+        return $this->productToOrders;
+    }
+
+    public function addProductToOrder(ProductToOrder $productToOrder): self
+    {
+        if (!$this->productToOrders->contains($productToOrder)) {
+            $this->productToOrders[] = $productToOrder;
+            $productToOrder->setOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductToOrder(ProductToOrder $productToOrder): self
+    {
+        if ($this->productToOrders->removeElement($productToOrder)) {
+            // set the owning side to null (unless already changed)
+            if ($productToOrder->getOrder() === $this) {
+                $productToOrder->setOrder(null);
+            }
+        }
 
         return $this;
     }

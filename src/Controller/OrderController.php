@@ -8,40 +8,28 @@ use App\Repository\OrderRepository;
 use App\Services\OrderService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/order')]
 class OrderController extends AbstractController
 {
-    private RequestStack $requestStack;
-
-
-    public function __construct(RequestStack $requestStack)
-    {
-        $this->requestStack = $requestStack;
-    }
-
     #[Route('/index', name: 'app_order_index', methods: ['GET', 'POST'])]
-    public function index(Request $request, OrderRepository $orderRepository): Response
+    public function index(Request $request, OrderRepository $orderRepository, OrderService $orderService): Response
     {
-        $orderService = new OrderService($this->requestStack);
         $order = new Order;
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
-        $session = $this->requestStack->getSession();
+        $session = $orderService->requestStack->getSession();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->getData()->getTotalPrice() !== $orderService->calculateSum())
-                $order->setTotalPrice($orderService->calculateSum());
-
+            $order->setTotalPrice($orderService->calculateSum());
             $orderRepository->add($order, true);
             foreach ($session->get('products') as $key => $product) {
-                $price = $product['product']->getPrice() * $product['quantity'];
-                $orderService->createProductToOrder($product['product'], $order, $product['quantity'], $price, $this->getDoctrine());
-                $session->remove('products');
+                $price = $orderService->calculatePrice($product);
+                $orderService->createProductToOrder($product['product'], $order, $product['quantity'], $price);
             }
+            $session->remove('products');
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 

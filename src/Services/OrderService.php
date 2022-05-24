@@ -10,11 +10,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class OrderService
 {
-    private RequestStack $requestStack;
+    public RequestStack $requestStack;
+    private ManagerRegistry $doctrine;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack, ManagerRegistry $doctrine)
     {
         $this->requestStack = $requestStack;
+        $this->doctrine = $doctrine;
     }
 
     public function calculateSum(): int
@@ -31,9 +33,14 @@ class OrderService
         return $sum;
     }
 
-    public function createProductToOrder(Product $product, Order $order, int $quantity, int $price, $doctrine): void
+    public function calculatePrice($product): float|int
     {
-        $manager = $doctrine->getManager();
+        return $product['product']->getPrice() * $product['quantity'];
+    }
+
+    public function createProductToOrder(Product $product, Order $order, int $quantity, int $price): void
+    {
+        $manager = $this->doctrine->getManager();
 
         $productToOrder = new ProductToOrder();
         $productToOrder->setProduct($product);
