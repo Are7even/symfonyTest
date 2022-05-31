@@ -24,11 +24,8 @@ class OrderController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $order->setTotalPrice($orderService->calculateSum());
-            $orderRepository->add($order, true);
-            foreach ($session->get('products') as $key => $product) {
-                $price = $orderService->calculatePrice($product);
-                $orderService->createProductToOrder($product['product'], $order, $product['quantity'], $price);
-            }
+            $orderService->add($order, $session);
+            dump($order);die;
             $session->remove('products');
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }

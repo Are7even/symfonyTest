@@ -5,18 +5,22 @@ namespace App\Services;
 use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\ProductToOrder;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class OrderService
 {
     public RequestStack $requestStack;
-    private ManagerRegistry $doctrine;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(RequestStack $requestStack, ManagerRegistry $doctrine)
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $entityManager)
     {
         $this->requestStack = $requestStack;
-        $this->doctrine = $doctrine;
+        $this->entityManager = $entityManager;
     }
 
     public function calculateSum(): int
@@ -33,22 +37,36 @@ class OrderService
         return $sum;
     }
 
-    public function calculatePrice($product): float|int
+    private function calculatePrice($product): float|int
     {
         return $product['product']->getPrice() * $product['quantity'];
     }
 
-    public function createProductToOrder(Product $product, Order $order, int $quantity, int $price): void
+    private function createProductToOrder(Product $product, Order $order, int $quantity, int $price): void
     {
-        $manager = $this->doctrine->getManager();
-
         $productToOrder = new ProductToOrder();
         $productToOrder->setProduct($product);
         $productToOrder->setOrder($order);
         $productToOrder->setQuantity($quantity);
         $productToOrder->setPrice($price);
 
-        $manager->merge($productToOrder);
-        $manager->flush();
+        $this->entityManager->merge($productToOrder);
+
+        $order->addProductToOrder($productToOrder);
+    }
+
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
+    public function add(Order $order, $session): void
+    {
+        foreach ($session->get('products') as $key => $product) {
+            $price = $this->calculatePrice($product);
+            $this->createProductToOrder($product['product'], $order, $product['quantity'], $price);
+        }
+
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
     }
 }

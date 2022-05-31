@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,11 +29,12 @@ class Order
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
-    #[ORM\OneToMany(mappedBy: 'order', targetEntity: ProductToOrder::class)]
+    #[ORM\OneToMany(mappedBy: 'order', targetEntity: ProductToOrder::class, cascade: ['persist'])]
      private $productToOrders;
 
     public function __construct()
     {
+        $this->productToOrders = new ArrayCollection();
         $this->status = 1;
         $this->date = time();
     }
